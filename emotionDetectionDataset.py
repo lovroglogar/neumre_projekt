@@ -26,7 +26,7 @@ class EmotionDetectionDataset(VisionDataset):
             train: bool = True,
             transform: Optional[Callable] = None,
             target_transform: Optional[Callable] = None,
-            download: bool = False,
+            download: bool = False
     ) -> None:
         super().__init__(root, transform=transform, target_transform=target_transform)
         self.train = train

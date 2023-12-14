@@ -9,7 +9,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 
 def prepare_dataset(ds_train, ds_test, batch_size, train_val_split=0.8):
-    torch.manual_seed(235)
+    # torch.manual_seed(2563)
     (ds_train, ds_val) = random_split(ds_train, [train_val_split, 1 - train_val_split], generator=torch.Generator())
 
     train_data_loader = DataLoader(ds_train, shuffle=True, batch_size=batch_size)
@@ -20,8 +20,8 @@ def prepare_dataset(ds_train, ds_test, batch_size, train_val_split=0.8):
 
 
 def train_torch_model(model, train_data_loader, val_data_loader, config, device='cpu', write_to_tensorboard=True,
-                      model_save_path=None):
-    optimizer = optim.Adam(model.parameters(), lr=config['lr'], weight_decay=config['weight_decay'])
+                      model_save_path=None, optimizer=optim.Adam):
+    optimizer = optimizer(model.parameters(), lr=config['lr'], weight_decay=config['weight_decay'])
 
     history = {
         'train_loss': [],
