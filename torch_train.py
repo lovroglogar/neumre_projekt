@@ -127,4 +127,4 @@ def evaluate_model(model, data_loader, labels, device='cpu'):
         print(f'Preciznost klase {i}: {precision_i}. Odziv klase {i}: {recall_i}')
         pr.append((precision_i, recall_i))
 
-    return M, np.array(pr)
+    return M.T, np.array(pr)
