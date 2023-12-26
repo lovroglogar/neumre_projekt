@@ -26,10 +26,12 @@ class EmotionDetectionDataset(VisionDataset):
             train: bool = True,
             transform: Optional[Callable] = None,
             target_transform: Optional[Callable] = None,
-            download: bool = False
+            download: bool = False,
+            excluded_classes=None
     ) -> None:
         super().__init__(root, transform=transform, target_transform=target_transform)
         self.train = train
+        self.excluded_classes = excluded_classes
 
         self.data, self.targets = self._load_data()
 
@@ -49,6 +51,12 @@ class EmotionDetectionDataset(VisionDataset):
                 images = hf[f'{base}_data'][:]
             with h5py.File(targets_path, 'r') as hf:
                 targets = hf[f'{base}_targets'][:]
+
+        if self.excluded_classes:
+            self.labels_and_classes = {key: value for key, value in self.labels_and_classes.items() if key not in self.excluded_classes}
+            for exclude in self.excluded_classes:
+                images = images[targets != exclude]
+                targets = targets[targets != exclude]
 
         return torch.tensor(images, dtype=torch.uint8), torch.tensor(targets, dtype=torch.uint8)
 

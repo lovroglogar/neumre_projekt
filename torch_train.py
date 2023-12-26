@@ -114,8 +114,6 @@ def evaluate_model(model, data_loader, labels, device='cpu'):
             true += (pred == y).type(torch.float).sum().item()
             M += confusion_matrix(y.cpu().detach().numpy(), pred.cpu().detach().numpy(), labels=labels)
 
-    print(f'Total loss: {loss / len(data_loader.dataset)}. Accuracy: {true / len(data_loader.dataset)}')
-    print(M)
     pr = []
     for i in range(num_classes):
         tp_i = M[i, i]
@@ -124,7 +122,6 @@ def evaluate_model(model, data_loader, labels, device='cpu'):
         tn_i = np.sum(M) - fp_i - fn_i - tp_i
         recall_i = tp_i / (tp_i + fn_i)
         precision_i = tp_i / (tp_i + fp_i)
-        print(f'Preciznost klase {i}: {precision_i}. Odziv klase {i}: {recall_i}')
         pr.append((precision_i, recall_i))
 
     return M.T, np.array(pr)
