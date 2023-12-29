@@ -54,8 +54,7 @@ class ConvolutionalModel3(nn.Module):
             #nn.BatchNorm1d(num_features=32),
             #nn.Dropout(p=0.25),
 
-            nn.Linear(32, 7),
-            nn.Softmax(),
+            nn.Linear(32, 7)
         )
 
     def forward(self, x):
