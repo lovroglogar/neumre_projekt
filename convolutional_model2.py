@@ -1,9 +1,9 @@
 from torch import nn
 
 
-class ConvolutionalModel3(nn.Module):
+class ConvolutionalModel2(nn.Module):
     def __init__(self):
-        super(ConvolutionalModel3, self).__init__()
+        super(ConvolutionalModel2, self).__init__()
 
         self.net = nn.Sequential(
             nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3, stride=1, padding=1),
